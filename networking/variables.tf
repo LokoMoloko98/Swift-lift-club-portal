@@ -9,6 +9,6 @@ variable "project_name" {
   type        = string
 }
 
-variable "lambda-function-arn" {
+variable "fare-calculation-function-arn" {
   type = string
 }

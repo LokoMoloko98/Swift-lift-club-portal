@@ -9,6 +9,6 @@ variable "project_name" {
   type        = string
 }
 
-variable "dynamodb-arn" {
+variable "trips-dynamodb-table-arn" {
   type = string
 }

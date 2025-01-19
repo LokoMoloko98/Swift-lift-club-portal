@@ -16,3 +16,7 @@ variable "lambda-role-arn" {
 variable "apigateway_arn" {
   type = string
 }
+
+variable "trips-dynamodb-table-name" {
+  type = string
+}

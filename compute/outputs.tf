@@ -1,7 +1,7 @@
-output "lambda-function-arn" {
-  value = aws_lambda_function.Lokos-blok-crud-function.arn
+output "fare-calculation-function-arn" {
+  value = aws_lambda_function.fare_calculation.arn
 }
 
-output "lambda-function-name" {
-  value = aws_lambda_function.Lokos-blok-crud-function.function_name
+output "fare-calculation-function-name" {
+  value = aws_lambda_function.fare_calculation.function_name 
 }

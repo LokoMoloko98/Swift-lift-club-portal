@@ -1,5 +1,5 @@
 #Create an IAM role
-resource "aws_iam_role" "moloko-blog-lambda-role" {
+resource "aws_iam_role" "swift-lift-club-lambda-role" {
   name = "${var.project_name}-iam-role"
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
@@ -23,18 +23,18 @@ resource "aws_iam_role" "moloko-blog-lambda-role" {
 
 #Lambda Execution policy
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
-  role       = aws_iam_role.moloko-blog-lambda-role.name
+  role       = aws_iam_role.swift-lift-club-lambda-role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-#SSM policy 1
+#SSM policy
 resource "aws_iam_role_policy_attachment" "SSM-role-attachment" {
-  role       = aws_iam_role.moloko-blog-lambda-role.name
+  role       = aws_iam_role.swift-lift-club-lambda-role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 #Route53 policy
 resource "aws_iam_role_policy_attachment" "route53-role-attachment" {
-  role       = aws_iam_role.moloko-blog-lambda-role.name
+  role       = aws_iam_role.swift-lift-club-lambda-role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonRoute53FullAccess"
 }
