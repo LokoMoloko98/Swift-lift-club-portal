@@ -3,5 +3,5 @@ output "cognito_user_pool_arn" {
 }
 
 output "cognito_user_pool_client_arn" {
-  value = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.arn
+  value = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.name
 }
