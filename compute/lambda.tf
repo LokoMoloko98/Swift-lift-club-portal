@@ -1,4 +1,4 @@
-resource "aws_lambda_function" "Lokos-blok-crud-function" {
+resource "aws_lambda_function" "fare_calculation" {
   s3_bucket     = "moloko-lambda-functions"
   s3_key        = "Lokos-Blok/molokos-blog-crud.zip"
   function_name = "Lokos-blok-crud-function"

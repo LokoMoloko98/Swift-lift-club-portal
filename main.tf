@@ -4,6 +4,14 @@ module "database" {
   region       = var.region
 }
 
+module "cognito" {
+  source          = "./cognito"
+  project_name    = var.project_name
+  region          = var.region
+  lambda-role-arn = module.iam.lambda-dynamodb-role-arn
+  apigateway_arn  = module.networking.apigateway_arn
+}
+
 module "iam" {
   source       = "./iam"
   project_name = var.project_name
