@@ -55,22 +55,6 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
   stream_enabled   = true
   stream_view_type = "NEW_IMAGE" # Capture new image of the item after modification
 
-  # Additional attributes for storage
-  attribute {
-    name = "status"
-    type = "S" # S for String
-  }
-
-  attribute {
-    name = "route_id"
-    type = "S" # S for String
-  }
-
-  attribute {
-    name = "fare"
-    type = "N" # N for Number
-  }
-
   # Global secondary indexes can be added here if needed
   ttl {
     attribute_name = "TimeToExist"
