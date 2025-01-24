@@ -45,7 +45,7 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
   }
 
   attribute {
-    name = "trip_date"
+    name = "trip_date_time"
     type = "S"
   }
 
