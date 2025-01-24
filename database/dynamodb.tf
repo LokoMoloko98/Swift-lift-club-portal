@@ -51,7 +51,7 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
 
  # Table Keys
   hash_key  = "passenger_id" # Partition Key
-  range_key = "trip_date"    # Sort Key
+  range_key = "trip_date_time"    # Sort Key
 
   # Enable stream if needed for real-time updates
   stream_enabled   = true
