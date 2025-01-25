@@ -53,7 +53,8 @@ resource "aws_apigatewayv2_deployment" "swift-lift-club-apigateway-prd-deploymen
 
   triggers = {
     redeployment = sha1(join(",", tolist([
-      jsonencode(aws_apigatewayv2_integration.swift-lift-club-apigateway-lambda-integration),
+      jsonencode(aws_apigatewayv2_integration.swift-lift-club-fare-calculation-apigateway-lambda-integration),
+      jsonencode(aws_apigatewayv2_integration.swift-lift-club-trips-ops-apigateway-lambda-integration),
       jsonencode(aws_apigatewayv2_route.fare-calculation),
       jsonencode(aws_apigatewayv2_route.create-trip-record),
       jsonencode(aws_apigatewayv2_route.update-trip-record),
