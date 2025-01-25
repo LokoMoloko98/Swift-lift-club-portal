@@ -4,12 +4,21 @@ resource "aws_apigatewayv2_api" "swift-lift-club-api-gateway" {
   protocol_type = "HTTP"
 }
 
-resource "aws_apigatewayv2_integration" "swift-lift-club-apigateway-lambda-integration" {
+resource "aws_apigatewayv2_integration" "swift-lift-club-fare-calculation-apigateway-lambda-integration" {
   api_id               = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
   integration_type     = "AWS_PROXY"
   connection_type      = "INTERNET"
-  description          = "swift-lift-club API-gateway-Lambda-integration"
+  description          = "swift-lift-club API-gateway fare-calculation lambda function integration"
   integration_uri      = var.fare-calculation-function-arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+}
+
+resource "aws_apigatewayv2_integration" "swift-lift-club-trips-ops-apigateway-lambda-integration" {
+  api_id               = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
+  integration_type     = "AWS_PROXY"
+  connection_type      = "INTERNET"
+  description          = "wift-lift-club API-gateway trips table ops lambda function integration"
+  integration_uri      = var.trips-table-ops-function-arn
   passthrough_behavior = "WHEN_NO_MATCH"
 }
 
@@ -44,7 +53,8 @@ resource "aws_apigatewayv2_deployment" "swift-lift-club-apigateway-prd-deploymen
 
   triggers = {
     redeployment = sha1(join(",", tolist([
-      jsonencode(aws_apigatewayv2_integration.swift-lift-club-apigateway-lambda-integration),
+      jsonencode(aws_apigatewayv2_integration.swift-lift-club-fare-calculation-apigateway-lambda-integration),
+      jsonencode(aws_apigatewayv2_integration.swift-lift-club-trips-ops-apigateway-lambda-integration),
       jsonencode(aws_apigatewayv2_route.fare-calculation),
       jsonencode(aws_apigatewayv2_route.create-trip-record),
       jsonencode(aws_apigatewayv2_route.update-trip-record),

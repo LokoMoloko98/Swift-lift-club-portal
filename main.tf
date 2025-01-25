@@ -24,6 +24,7 @@ module "networking" {
   project_name                  = var.project_name
   region                        = var.region
   fare-calculation-function-arn = module.compute.fare-calculation-function-arn
+  trips-table-ops-function-arn  = module.compute.trips-table-ops-function-arn
 }
 
 module "compute" {
