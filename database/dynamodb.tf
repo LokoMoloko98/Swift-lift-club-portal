@@ -80,3 +80,5 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
     Costs       = "${var.project_name}"
   }
 }
+
+

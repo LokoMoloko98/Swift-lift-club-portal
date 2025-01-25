@@ -1,12 +1,11 @@
 resource "aws_lambda_function" "fare_calculation" {
-  s3_bucket = "mea-munera-lambda"
+  s3_bucket     = "mea-munera-lambda"
   #swift-lift-fare-calculation-1.0.7.zip is the initializing version, the version in production will be dictated by the CI/CD pipeline
-  s3_key        = "swift-lift-fare-calculation/swift-lift-fare-calculation-1.0.7.zip"
+  s3_key        = "swift-lift-fare-calculation/swift-lift-fare-calculation-1.0.7.zip" 
   function_name = "swift-lift-fare-calculation"
   role          = var.lambda-role-arn
   handler       = "swift-lift-fare-calculation.lambda_handler"
   timeout       = 90
-
   runtime = "python3.12"
 
   environment {
