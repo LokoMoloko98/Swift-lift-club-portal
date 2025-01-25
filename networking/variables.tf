@@ -12,3 +12,7 @@ variable "project_name" {
 variable "fare-calculation-function-arn" {
   type = string
 }
+
+variable "trips-table-ops-function-arn" {
+  type = string
+}
