@@ -34,8 +34,8 @@
 # }
 
 resource "aws_dynamodb_table" "trips-dynamodb-table" {
-  name         = "${var.project_name}-trips"
-  billing_mode = "PROVISIONED"
+  name           = "${var.project_name}-trips"
+  billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
 
@@ -49,9 +49,9 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
     type = "S"
   }
 
- # Table Keys
-  hash_key  = "passenger_id" # Partition Key
-  range_key = "trip_date_time"    # Sort Key
+  # Table Keys
+  hash_key  = "passenger_id"   # Partition Key
+  range_key = "trip_date_time" # Sort Key
 
   # Enable stream if needed for real-time updates
   stream_enabled   = true
