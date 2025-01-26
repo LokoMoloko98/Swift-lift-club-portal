@@ -37,6 +37,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
   user_pool_id                  = aws_cognito_user_pool.swift_lift_club_user_pool.id
   name                          = "${var.project_name}-app-client"
+  supported_identity_providers = [ "COGNITO" ]
   explicit_auth_flows           = ["ALLOW_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_PASSWORD_AUTH"]
   generate_secret               = false
   allowed_oauth_flows           = ["code"]
