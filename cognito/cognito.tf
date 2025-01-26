@@ -57,9 +57,7 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
   explicit_auth_flows           = ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_CUSTOM_AUTH"]
   generate_secret               = false
   allowed_oauth_flows           = ["code"]
-
   prevent_user_existence_errors = "LEGACY"
-  
   refresh_token_validity        = 1
   access_token_validity         = 1
   id_token_validity             = 1
