@@ -41,10 +41,14 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
   user_pool_id                  = aws_cognito_user_pool.swift_lift_club_user_pool.id
   name                          = "${var.project_name}-app-client"
-  supported_identity_providers = [ "COGNITO" ]
-  explicit_auth_flows           = ["ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_CUSTOM_AUTH"]
+  supported_identity_providers  = ["COGNITO"]
+  explicit_auth_flows           = [
+    "ALLOW_USER_SRP_AUTH",         # SRP Authentication
+    "ALLOW_USER_PASSWORD_AUTH",    # Username/Password flow
+    "ALLOW_REFRESH_TOKEN_AUTH"     # Refresh token flow
+  ]
   generate_secret               = false
-  allowed_oauth_flows           = ["code"]
+  allowed_oauth_flows           = []  # No OAuth flow needed
   prevent_user_existence_errors = "LEGACY"
   refresh_token_validity        = 1
   access_token_validity         = 1
@@ -55,6 +59,7 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
     refresh_token = "hours"
   }
 }
+
 
 resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
   identity_pool_name = "${var.project_name}-identity-pool"
