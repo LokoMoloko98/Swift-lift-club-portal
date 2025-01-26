@@ -23,7 +23,7 @@ resource "aws_iam_role" "cognito_authenticated_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "attach_authenticated_policy" {
-  role       = aws_iam_role.cognito_authenticated_role.name
-  policy_arn = aws_iam_role_policy.authenticated_users_api_policy.arn
-}
+# resource "aws_iam_role_policy_attachment" "attach_authenticated_policy" {
+#   role       = aws_iam_role.cognito_authenticated_role.name
+#   policy_arn = aws_iam_policy.authenticated_users_api_policy.arn
+# }
