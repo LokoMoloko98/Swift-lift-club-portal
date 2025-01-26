@@ -8,19 +8,11 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     developer_only_attribute = false
   }
 
-  schema {
-    name                     = "phone_number"
-    attribute_data_type      = "String"
-    mutable                  = true
-    required                 = true
-    developer_only_attribute = false
-  }
-
   email_configuration {
     email_sending_account = "COGNITO_DEFAULT"
   }
 
-  auto_verified_attributes = ["email", "phone_number"]
+  auto_verified_attributes = ["email"]
 
   password_policy {
     minimum_length    = 6
@@ -42,10 +34,6 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     recovery_mechanism {
       name     = "verified_email"
       priority = 1
-    }
-    recovery_mechanism {
-      name     = "verified_phone_number"
-      priority = 2
     }
   }
 }
