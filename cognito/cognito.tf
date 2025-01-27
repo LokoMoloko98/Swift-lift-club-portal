@@ -86,8 +86,13 @@ resource "aws_cognito_user_pool_domain" "main" {
   user_pool_id    = aws_cognito_user_pool.swift_lift_club_user_pool.id
 }
 
-resource "aws_route53_record" "auth-cognito-A" {
+resource "aws_route53_record" "auth-cognito-A-record" {
   name    = aws_cognito_user_pool_domain.main.domain
   type    = "A"
   zone_id = var.hosted_zone_id
+  alias {
+    name                   = aws_cognito_user_pool_domain.main.cloudfront_distribution_arn
+    zone_id                = aws_cognito_user_pool_domain.main.cloudfront_zone_id
+    evaluate_target_health = false
+  }
 }
