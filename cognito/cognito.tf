@@ -92,7 +92,7 @@ resource "aws_route53_record" "auth-cognito-A-record" {
   zone_id = var.hosted_zone_id
   alias {
     name                   = aws_cognito_user_pool_domain.main.cloudfront_distribution_arn
-    zone_id                = aws_cognito_user_pool_domain.main.cloudfront_zone_id
+    zone_id                = "Z2FDTNDATAQYW2" # CloudFront Zone ID
     evaluate_target_health = false
   }
 }
