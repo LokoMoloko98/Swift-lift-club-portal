@@ -5,12 +5,14 @@ module "database" {
 }
 
 module "cognito" {
-  source          = "./cognito"
-  project_name    = var.project_name
-  region          = var.region
-  lambda-role-arn = module.iam.lambda-dynamodb-role-arn
-  apigateway_arn  = module.networking.apigateway_arn
-  domain_name     = var.domain_name
+  source                   = "./cognito"
+  project_name             = var.project_name
+  region                   = var.region
+  lambda-role-arn          = module.iam.lambda-dynamodb-role-arn
+  apigateway_arn           = module.networking.apigateway_arn
+  domain_name              = var.domain_name
+  swift_lift_club_cert_arn = module.networking.swift_lift_club_cert_arn
+  hosted_zone_id           = var.hosted_zone_id
 }
 
 module "iam" {
@@ -28,6 +30,7 @@ module "networking" {
   region                        = var.region
   fare-calculation-function-arn = module.compute.fare-calculation-function-arn
   trips-table-ops-function-arn  = module.compute.trips-table-ops-function-arn
+  domain_name                   = var.domain_name
 }
 
 module "compute" {

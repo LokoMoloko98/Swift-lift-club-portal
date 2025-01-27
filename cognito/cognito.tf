@@ -80,3 +80,19 @@ resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
   }
 }
 
+resource "aws_cognito_user_pool_domain" "main" {
+  domain          = "auth.${var.domain_name}"
+  certificate_arn = var.swift_lift_club_cert_arn
+  user_pool_id    = aws_cognito_user_pool.swift_lift_club_user_pool.id
+}
+
+resource "aws_route53_record" "auth-cognito-A-record" {
+  name    = aws_cognito_user_pool_domain.main.domain
+  type    = "A"
+  zone_id = var.hosted_zone_id
+  alias {
+    name                   = aws_cognito_user_pool_domain.main.cloudfront_distribution_arn
+    zone_id                = "Z2FDTNDATAQYW2" # CloudFront Zone ID
+    evaluate_target_health = false
+  }
+}

@@ -16,3 +16,7 @@ variable "fare-calculation-function-arn" {
 variable "trips-table-ops-function-arn" {
   type = string
 }
+
+variable "domain_name" {
+  type = string
+}
