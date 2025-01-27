@@ -10,6 +10,7 @@ module "cognito" {
   region          = var.region
   lambda-role-arn = module.iam.lambda-dynamodb-role-arn
   apigateway_arn  = module.networking.apigateway_arn
+  domain_name     = var.domain_name
 }
 
 module "iam" {

@@ -26,7 +26,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     case_sensitive = true
   }
 
-   admin_create_user_config {
+  admin_create_user_config {
     allow_admin_create_user_only = true
   }
 
@@ -39,16 +39,16 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 }
 
 resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
-  user_pool_id                  = aws_cognito_user_pool.swift_lift_club_user_pool.id
-  name                          = "${var.project_name}-app-client"
-  supported_identity_providers  = ["COGNITO"]
-  explicit_auth_flows           = [
-    "ALLOW_USER_SRP_AUTH",         # SRP Authentication
-    "ALLOW_USER_PASSWORD_AUTH",    # Username/Password flow
-    "ALLOW_REFRESH_TOKEN_AUTH"     # Refresh token flow
+  user_pool_id                 = aws_cognito_user_pool.swift_lift_club_user_pool.id
+  name                         = "${var.project_name}-app-client"
+  supported_identity_providers = ["COGNITO"]
+  explicit_auth_flows = [
+    "ALLOW_USER_SRP_AUTH",      # SRP Authentication
+    "ALLOW_USER_PASSWORD_AUTH", # Username/Password flow
+    "ALLOW_REFRESH_TOKEN_AUTH"  # Refresh token flow
   ]
   generate_secret               = false
-  allowed_oauth_flows           = []  # No OAuth flow needed
+  allowed_oauth_scopes          = ["openid", "email", "profile"]
   prevent_user_existence_errors = "LEGACY"
   refresh_token_validity        = 1
   access_token_validity         = 1
@@ -58,16 +58,25 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
     id_token      = "hours"
     refresh_token = "hours"
   }
+  callback_urls = [
+    "https://${var.domain_name}/callback", # Replace with your actual frontend app URL
+    "http://localhost:3000/callback"       # For local testing (if needed)
+  ]
+
+  # If you're using logout URLs
+  logout_urls = [
+    "https://${var.domain_name}/logout"
+  ]
 }
 
 
 resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
-  identity_pool_name = "${var.project_name}-identity-pool"
+  identity_pool_name               = "${var.project_name}-identity-pool"
   allow_unauthenticated_identities = false
 
   cognito_identity_providers {
-    client_id       = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
-    provider_name   = aws_cognito_user_pool.swift_lift_club_user_pool.endpoint
+    client_id     = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
+    provider_name = aws_cognito_user_pool.swift_lift_club_user_pool.endpoint
   }
 }
 
