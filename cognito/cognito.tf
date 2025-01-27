@@ -48,7 +48,7 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
     "ALLOW_REFRESH_TOKEN_AUTH"  # Refresh token flow
   ]
   generate_secret               = false
-  allowed_oauth_scopes          = ["openid", "email", "profile"]
+  allowed_oauth_scopes          = []
   prevent_user_existence_errors = "LEGACY"
   refresh_token_validity        = 1
   access_token_validity         = 1
