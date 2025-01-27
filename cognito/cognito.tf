@@ -48,7 +48,7 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
     "ALLOW_REFRESH_TOKEN_AUTH"     # Refresh token flow
   ]
   generate_secret               = false
-  allowed_oauth_flows           = []  # No OAuth flow needed
+  allowed_oauth_scopes = ["openid", "email", "profile"]
   prevent_user_existence_errors = "LEGACY"
   refresh_token_validity        = 1
   access_token_validity         = 1
@@ -58,6 +58,15 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
     id_token      = "hours"
     refresh_token = "hours"
   }
+  callback_urls = [
+    "https://${var.domain_name}/callback",  # Replace with your actual frontend app URL
+    "http://localhost:3000/callback"  # For local testing (if needed)
+  ]
+
+  # If you're using logout URLs
+  logout_urls = [
+    "https://${var.domain_name}/logout"
+  ]
 }
 
 

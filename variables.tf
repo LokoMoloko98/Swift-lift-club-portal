@@ -8,3 +8,7 @@ variable "project_name" {
   description = "project name"
   type        = string
 }
+
+variable "domain_name" {
+  type = string
+}

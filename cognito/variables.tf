@@ -16,3 +16,7 @@ variable "lambda-role-arn" {
 variable "apigateway_arn" {
   type = string
 }
+
+variable "domain_name" {
+  type = string
+}
