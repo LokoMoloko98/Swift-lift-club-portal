@@ -1,37 +1,51 @@
-# resource "aws_dynamodb_table" "users-dynamodb-table" {
-#   name           = "${var.project_name}-users"
-#   billing_mode   = "PROVISIONED"
-#   read_capacity  = 20
-#   write_capacity = 20
-#   hash_key       = "user_id"
+resource "aws_dynamodb_table" "users-dynamodb-table" {
+  name           = "${var.project_name}-users"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
 
-#   attribute {
-#     name = "user_id"
-#     type = "S"
-#   }
 
-#   ttl {
-#     attribute_name = "TimeToExist"
-#     enabled        = true
-#   }
+  attribute {
+    name = "passenger_id"
+    type = "S"
+  }
 
-#   point_in_time_recovery {
-#     enabled = true
-#   }
+  attribute {
+    name = "passenger_name"
+    type = "S"
+  }
 
-#   lifecycle {
-#     ignore_changes = [
-#       write_capacity,
-#       read_capacity
-#     ]
-#   }
+  hash_key  = "passenger_id"   # Partition Key
+  range_key = "passenger_name" # Sort Key
 
-#   tags = {
-#     Name        = "${var.project_name}-users-table"
-#     Environment = "production"
-#     Costs       = "${var.project_name}"
-#   }
-# }
+  # Enable stream if needed for real-time updates
+  stream_enabled   = true
+  stream_view_type = "NEW_IMAGE" # Capture new image of the item after modification
+
+  # Global secondary indexes can be added here if needed
+  ttl {
+    attribute_name = "TimeToExist"
+    enabled        = true
+  }
+
+
+  point_in_time_recovery {
+    enabled = true
+  }
+
+  lifecycle {
+    ignore_changes = [
+      write_capacity,
+      read_capacity
+    ]
+  }
+
+  tags = {
+    Name        = "${var.project_name}-users-table"
+    Environment = "production"
+    Costs       = "${var.project_name}"
+  }
+}
 
 resource "aws_dynamodb_table" "trips-dynamodb-table" {
   name           = "${var.project_name}-trips"
@@ -41,7 +55,7 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
 
   attribute {
     name = "passenger_id"
-    type = "S" # S for String
+    type = "S"
   }
 
   attribute {
