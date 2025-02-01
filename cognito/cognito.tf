@@ -1,11 +1,33 @@
 resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
   name = "${var.project_name}-user-pool"
+  
   schema {
     name                     = "email"
     attribute_data_type      = "String"
     mutable                  = true
     required                 = true
     developer_only_attribute = false
+  }
+
+  schema {
+    name                     = "name"
+    attribute_data_type      = "String"
+    mutable                  = true
+    required                 = true
+    developer_only_attribute = false
+  }
+
+  schema {
+    name                     = "passenger_id"  # Custom attribute to link with DynamoDB
+    attribute_data_type      = "String"
+    mutable                  = false           # Once set, can't be changed
+    required                 = true
+    developer_only_attribute = false
+
+    string_attribute_constraints {
+      min_length = 1
+      max_length = 256
+    }
   }
 
   email_configuration {
@@ -15,7 +37,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
   auto_verified_attributes = ["email"]
 
   password_policy {
-    minimum_length    = 6
+    minimum_length    = 8
     require_lowercase = true
     require_numbers   = true
     require_uppercase = true
@@ -23,11 +45,16 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 
   username_attributes = ["email"]
   username_configuration {
-    case_sensitive = true
+    case_sensitive = false
   }
 
   admin_create_user_config {
     allow_admin_create_user_only = true
+    invite_message_template {
+      email_message = "Your username is {username} and temporary password is {####}."
+      email_subject = "Your Swift Lift Club Account"
+      sms_message   = "Your username is {username} and temporary password is {####}."
+    }
   }
 
   account_recovery_setting {
@@ -45,27 +72,35 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
   explicit_auth_flows = [
     "ALLOW_USER_SRP_AUTH",      # SRP Authentication
     "ALLOW_USER_PASSWORD_AUTH", # Username/Password flow
-    "ALLOW_REFRESH_TOKEN_AUTH"  # Refresh token flow
+    "ALLOW_REFRESH_TOKEN_AUTH",  # Refresh token flow
+    "ALLOW_CUSTOM_AUTH"         # Custom authentication flow
   ]
   generate_secret               = false
-  allowed_oauth_scopes          = []
-  prevent_user_existence_errors = "LEGACY"
+  allowed_oauth_flows = ["code", "implicit"]
+  allowed_oauth_flows_user_pool_client = true
+  allowed_oauth_scopes = [
+    "email",
+    "openid",
+    "profile"
+  ]
+  prevent_user_existence_errors = "ENABLED"
   refresh_token_validity        = 1
   access_token_validity         = 1
   id_token_validity             = 1
   token_validity_units {
     access_token  = "hours"
     id_token      = "hours"
-    refresh_token = "hours"
+    refresh_token = "days"
   }
+
   callback_urls = [
-    "https://${var.domain_name}/callback", # Replace with your actual frontend app URL
+    "https://${var.domain_name}/callback",
     "http://localhost:3000/callback"       # For local testing (if needed)
   ]
 
-  # If you're using logout URLs
   logout_urls = [
-    "https://${var.domain_name}/logout"
+    "https://${var.domain_name}/logout",
+    "http://localhost:3000/logout"
   ]
 }
 
