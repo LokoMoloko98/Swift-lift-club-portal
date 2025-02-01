@@ -21,7 +21,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     name                     = "passenger_id"  # Custom attribute to link with DynamoDB
     attribute_data_type      = "String"
     mutable                  = false           # Once set, can't be changed
-    required                 = true
+    required                 = false
     developer_only_attribute = false
 
     string_attribute_constraints {
