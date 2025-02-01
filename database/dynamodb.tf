@@ -3,7 +3,7 @@ resource "aws_dynamodb_table" "users-dynamodb-table" {
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
-  
+
 
   attribute {
     name = "passenger_id"
@@ -15,8 +15,8 @@ resource "aws_dynamodb_table" "users-dynamodb-table" {
     type = "S"
   }
 
-  hash_key       = "user_id"   # Partition Key
-  range_key = "trip_date_time" # Sort Key
+  hash_key  = "passenger_id"   # Partition Key
+  range_key = "passenger_name" # Sort Key
 
   # Enable stream if needed for real-time updates
   stream_enabled   = true
