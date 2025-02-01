@@ -22,6 +22,7 @@ module "iam" {
   trips-dynamodb-table-arn = module.database.trips-dynamodb-table-arn
   cognito_identity_pool_id = module.cognito.cognito_identity_pool_id
   apigateway_id            = module.networking.apigateway_id
+  users-dynamodb-table-arn = module.database.users-dynamodb-table-arn
 }
 
 module "networking" {
