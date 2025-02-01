@@ -13,6 +13,11 @@ variable "trips-dynamodb-table-arn" {
   type = string
 }
 
+variable "users-dynamodb-table-arn" {
+  type = string
+}
+
+
 variable "cognito_identity_pool_id" {
   type = string
 }

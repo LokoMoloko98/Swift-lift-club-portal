@@ -7,7 +7,7 @@ resource "aws_iam_role_policy" "dynamodb-lambda-policy" {
       {
         "Effect" : "Allow",
         "Action" : ["dynamodb:*"],
-        "Resource" : "${var.trips-dynamodb-table-arn}"
+        "Resource" : ["${var.trips-dynamodb-table-arn}", "${var.users-dynamodb-table-arn}"]
       }
     ]
   })
