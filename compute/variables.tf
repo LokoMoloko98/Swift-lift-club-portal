@@ -20,3 +20,7 @@ variable "apigateway_arn" {
 variable "trips-dynamodb-table-name" {
   type = string
 }
+
+variable "users-dynamodb-table-name" {
+  type = string
+}
