@@ -2,6 +2,15 @@ resource "aws_apigatewayv2_api" "swift-lift-club-api-gateway" {
   name          = "${var.project_name}-http-api"
   description   = "swift-lift-club API_gateway"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_credentials = true
+    allow_headers     = ["Authorization", "Content-Type", "X-Amz-Date", "X-Api-Key", "X-Amz-Security-Token"]
+    allow_methods     = ["GET", "POST", "PUT", "OPTIONS"]
+    allow_origins     = ["http://localhost:3000", "https://${var.domain_name}"]
+    expose_headers    = ["Authorization"]
+    max_age           = 300
+  }
 }
 
 resource "aws_apigatewayv2_integration" "swift-lift-club-fare-calculation-apigateway-lambda-integration" {
@@ -76,4 +85,16 @@ resource "aws_cloudwatch_log_group" "main_api_gw" {
 data "aws_ssm_parameter" "route_53_hostzone_id" {
   name            = "route_53_hostzone_id"
   with_decryption = true
+}
+
+resource "aws_apigatewayv2_authorizer" "swift_lift_club_authorizer" {
+  api_id           = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
+  authorizer_type  = "JWT"
+  identity_sources = ["$request.header.Authorization"]
+  name             = "swift-lift-club-cognito-authorizer"
+
+  jwt_configuration {
+    audience = ["${var.cognito_user_pool_client_id}"]
+    issuer   = "https://${var.cognito_user_pool_endpoint}"
+  }
 }

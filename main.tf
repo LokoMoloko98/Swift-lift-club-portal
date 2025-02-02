@@ -32,6 +32,8 @@ module "networking" {
   fare-calculation-function-arn = module.compute.fare-calculation-function-arn
   trips-table-ops-function-arn  = module.compute.trips-table-ops-function-arn
   domain_name                   = var.domain_name
+  cognito_user_pool_client_id   = module.cognito.cognito_user_pool_client_id
+  cognito_user_pool_endpoint    = module.cognito.cognito_user_pool_endpoint
 }
 
 module "compute" {
