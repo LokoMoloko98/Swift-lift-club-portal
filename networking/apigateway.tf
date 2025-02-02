@@ -94,7 +94,7 @@ resource "aws_apigatewayv2_authorizer" "swift_lift_club_authorizer" {
   name             = "swift-lift-club-cognito-authorizer"
 
   jwt_configuration {
-    audience = [aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id]
-    issuer   = "https://${aws_cognito_user_pool.swift_lift_club_user_pool.endpoint}"
+    audience = ["${var.cognito_user_pool_client_id}"]
+    issuer   = "https://${var.cognito_user_pool_endpoint}"
   }
 }

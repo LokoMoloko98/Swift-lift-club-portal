@@ -20,3 +20,11 @@ variable "trips-table-ops-function-arn" {
 variable "domain_name" {
   type = string
 }
+
+variable "cognito_user_pool_client_id" {
+  type = string
+}
+
+variable "cognito_user_pool_endpoint" {
+  type = string
+}
