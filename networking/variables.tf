@@ -17,6 +17,10 @@ variable "trips-table-ops-function-arn" {
   type = string
 }
 
+variable "get-user-profile-function-arn" {
+  type = string
+}
+
 variable "domain_name" {
   type = string
 }

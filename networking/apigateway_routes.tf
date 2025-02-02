@@ -6,6 +6,14 @@ resource "aws_apigatewayv2_route" "fare-calculation" {
   authorizer_id      = aws_apigatewayv2_authorizer.swift_lift_club_authorizer.id
 }
 
+resource "aws_apigatewayv2_route" "user-profile" {
+  api_id             = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
+  route_key          = "GET /user/profile"
+  target             = "integrations/${aws_apigatewayv2_integration.swift-lift-club-user-profile-apigateway-lambda-integration.id}"
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.swift_lift_club_authorizer.id
+}
+
 resource "aws_apigatewayv2_route" "create-trip-record" {
   api_id             = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
   route_key          = "POST /trips/add"

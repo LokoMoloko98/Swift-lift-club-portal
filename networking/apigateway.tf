@@ -26,8 +26,17 @@ resource "aws_apigatewayv2_integration" "swift-lift-club-trips-ops-apigateway-la
   api_id               = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
   integration_type     = "AWS_PROXY"
   connection_type      = "INTERNET"
-  description          = "wift-lift-club API-gateway trips table ops lambda function integration"
+  description          = "swift-lift-club API-gateway trips table ops lambda function integration"
   integration_uri      = var.trips-table-ops-function-arn
+  passthrough_behavior = "WHEN_NO_MATCH"
+}
+
+resource "aws_apigatewayv2_integration" "swift-lift-club-user-profile-apigateway-lambda-integration" {
+  api_id               = aws_apigatewayv2_api.swift-lift-club-api-gateway.id
+  integration_type     = "AWS_PROXY"
+  connection_type      = "INTERNET"
+  description          = "swift-lift-club API-gateway trips table ops lambda function integration"
+  integration_uri      = var.get-user-profile-function-arn
   passthrough_behavior = "WHEN_NO_MATCH"
 }
 
@@ -67,7 +76,8 @@ resource "aws_apigatewayv2_deployment" "swift-lift-club-apigateway-prd-deploymen
       jsonencode(aws_apigatewayv2_route.fare-calculation),
       jsonencode(aws_apigatewayv2_route.create-trip-record),
       jsonencode(aws_apigatewayv2_route.update-trip-record),
-      jsonencode(aws_apigatewayv2_route.get-weekly-trips)
+      jsonencode(aws_apigatewayv2_route.get-weekly-trips),
+      jsonencode(aws_apigatewayv2_route.user-profile),
     ])))
   }
 

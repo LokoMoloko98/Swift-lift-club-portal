@@ -31,6 +31,7 @@ module "networking" {
   region                        = var.region
   fare-calculation-function-arn = module.compute.fare-calculation-function-arn
   trips-table-ops-function-arn  = module.compute.trips-table-ops-function-arn
+  get-user-profile-function-arn = module.compute.get-user-profile-function-arn
   domain_name                   = var.domain_name
   cognito_user_pool_client_id   = module.cognito.cognito_user_pool_client_id
   cognito_user_pool_endpoint    = module.cognito.cognito_user_pool_endpoint
@@ -43,4 +44,5 @@ module "compute" {
   lambda-role-arn           = module.iam.lambda-dynamodb-role-arn
   apigateway_arn            = module.networking.apigateway_arn
   trips-dynamodb-table-name = module.database.trips-dynamodb-table-name
+  users-dynamodb-table-name = module.database.users-dynamodb-table-name
 }
