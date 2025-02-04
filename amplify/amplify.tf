@@ -111,5 +111,5 @@ resource "aws_route53_record" "swift_lift" {
   name    = "swift-lift-club.moloko-mokubedi.co.za"
   type    = "CNAME"
   ttl     = "300"
-  records = ["${aws_amplify_domain_association.example.domain_name}"]
+  records = ["${aws_amplify_domain_association.swift_lift_app_dns.domain_name}"]
 }
