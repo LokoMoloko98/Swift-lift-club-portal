@@ -99,6 +99,7 @@ resource "aws_amplify_branch" "main" {
 resource "aws_amplify_domain_association" "swift_lift_app_dns" {
   app_id      = aws_amplify_app.swift_lift_app.id
   domain_name = "moloko-mokubedi.co.za"
+  wait_for_verification = false
   depends_on = [aws_amplify_app.swift_lift_app]
   sub_domain {
     branch_name = aws_amplify_branch.main.branch_name
