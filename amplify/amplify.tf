@@ -26,7 +26,7 @@ data "aws_ssm_parameter" "scope" {
 }
 
 data "aws_ssm_parameter" "github_access_token" {
-  name = "/Github_PAT/"
+  name = "Github_PAT"
   with_decryption = true
 }
 
