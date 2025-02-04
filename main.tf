@@ -46,3 +46,14 @@ module "compute" {
   trips-dynamodb-table-name = module.database.trips-dynamodb-table-name
   users-dynamodb-table-name = module.database.users-dynamodb-table-name
 }
+
+module "amplify" {
+  source = "./amplify"
+  project_name             = var.project_name
+  region                   = var.region
+  lambda-role-arn          = module.iam.lambda-dynamodb-role-arn
+  apigateway_arn           = module.networking.apigateway_arn
+  domain_name              = var.domain_name
+  swift_lift_club_cert_arn = module.networking.swift_lift_club_cert_arn
+  repository_url           = var.repository_url
+}
