@@ -13,6 +13,7 @@ module "cognito" {
   domain_name              = var.domain_name
   swift_lift_club_cert_arn = module.networking.swift_lift_club_cert_arn
   hosted_zone_id           = var.hosted_zone_id
+  amplify_app_id           = module.amplify.amplify_app_id
 }
 
 module "iam" {
@@ -20,7 +21,6 @@ module "iam" {
   project_name             = var.project_name
   region                   = var.region
   trips-dynamodb-table-arn = module.database.trips-dynamodb-table-arn
-  cognito_identity_pool_id = module.cognito.cognito_identity_pool_id
   apigateway_id            = module.networking.apigateway_id
   users-dynamodb-table-arn = module.database.users-dynamodb-table-arn
 }

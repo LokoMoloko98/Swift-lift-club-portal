@@ -17,11 +17,6 @@ variable "users-dynamodb-table-arn" {
   type = string
 }
 
-
-variable "cognito_identity_pool_id" {
-  type = string
-}
-
 variable "apigateway_id" {
   type = string
 }

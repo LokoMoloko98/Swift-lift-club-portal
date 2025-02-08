@@ -28,3 +28,7 @@ variable "swift_lift_club_cert_arn" {
 variable "hosted_zone_id" {
   type        = string 
 }
+
+variable "amplify_app_id" {
+  type        = string
+}
