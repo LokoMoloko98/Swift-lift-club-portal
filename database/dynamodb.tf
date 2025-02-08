@@ -51,18 +51,15 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
     type = "S"
   }
 
-  attribute {
-    name = "trip_date"
-    type = "S"
-  }
-
   # Table Keys
   hash_key  = "passenger_id"   # Partition Key
-  range_key = "trip_date" # Sort Key
 
   # Enable stream if needed for real-time updates
   stream_enabled   = true
   stream_view_type = "NEW_IMAGE"
+
+  # Use Infrequent Access Storage
+  table_class = "STANDARD_INFREQUENT_ACCESS"
 
   ttl {
     attribute_name = "TimeToExist"
