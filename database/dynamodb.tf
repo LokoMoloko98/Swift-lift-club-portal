@@ -18,9 +18,7 @@ resource "aws_dynamodb_table" "users-dynamodb-table" {
   # Enable stream if needed for real-time updates
   stream_enabled   = true
   stream_view_type = "NEW_IMAGE"
-  
-  table_class = "STANDARD_INFREQUENT_ACCESS"
-  
+
   ttl {
     attribute_name = "TimeToExist"
     enabled        = true
@@ -59,9 +57,6 @@ resource "aws_dynamodb_table" "trips-dynamodb-table" {
   # Enable stream if needed for real-time updates
   stream_enabled   = true
   stream_view_type = "NEW_IMAGE"
-
-  # Use Infrequent Access Storage
-  table_class = "STANDARD_INFREQUENT_ACCESS"
 
   ttl {
     attribute_name = "TimeToExist"
