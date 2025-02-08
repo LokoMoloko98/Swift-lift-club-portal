@@ -15,10 +15,11 @@ resource "aws_amplify_app" "swift_lift_app" {
   repository   = var.repository_url
   access_token = data.aws_ssm_parameter.github_access_token.value
 
-   # Enable auto branch creation
+  # Enable auto branch creation
   enable_auto_branch_creation = true
   enable_branch_auto_build   = true
-
+  
+  platform = "WEB_COMPUTE"
   # The default build_spec added by the Amplify Console for React.
   build_spec = <<-EOT
     version: 1
@@ -65,6 +66,7 @@ resource "aws_amplify_branch" "main" {
 
   framework = "Next.js - SSR"
   stage     = "PRODUCTION"
+
 
   enable_auto_build = true
 }
