@@ -25,10 +25,10 @@ data "aws_ssm_parameter" "route_53_hostzone_id" {
 #   with_decryption = true
 # }
 
-# data "aws_ssm_parameter" "github_access_token" {
-#   name = "Github_PAT"
-#   with_decryption = true
-# }
+data "aws_ssm_parameter" "github_access_token" {
+  name = "Github_PAT"
+  with_decryption = true
+}
 
 
 resource "aws_amplify_app" "swift_lift_app" {
