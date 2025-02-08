@@ -54,6 +54,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     invite_message_template {
       email_message = "Your username is {username} and temporary password is {####}."
       email_subject = "Your Swift Lift Club Account"
+      sms_message   = "Your username is {username} and temporary password is {####}."
     }
   }
 
