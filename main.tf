@@ -13,6 +13,7 @@ module "cognito" {
   domain_name              = var.domain_name
   swift_lift_club_cert_arn = module.networking.swift_lift_club_cert_arn
   hosted_zone_id           = var.hosted_zone_id
+  amplify_app_id           = module.amplify.amplify_app_id
 }
 
 module "iam" {

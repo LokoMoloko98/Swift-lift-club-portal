@@ -18,10 +18,10 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
   }
 
   schema {
-    name                     = "passenger_id"  # Custom attribute to link with DynamoDB
+    name                     = "nickname" 
     attribute_data_type      = "String"
-    mutable                  = false           # Once set, can't be changed
-    required                 = false
+    mutable                  = true
+    required                 = true
     developer_only_attribute = false
 
     string_attribute_constraints {
@@ -32,6 +32,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 
   email_configuration {
     email_sending_account = "COGNITO_DEFAULT"
+    from_email_address    = "Moloko Mokubedi <communication@moloko-mokubedi.co.za`s"
   }
 
   auto_verified_attributes = ["email"]
@@ -53,7 +54,6 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
     invite_message_template {
       email_message = "Your username is {username} and temporary password is {####}."
       email_subject = "Your Swift Lift Club Account"
-      sms_message   = "Your username is {username} and temporary password is {####}."
     }
   }
 
@@ -95,7 +95,7 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
 
   callback_urls = [
     "https://${var.domain_name}/callback",
-    "http://localhost:3000/callback"       # For local testing (if needed)
+    "http://localhost:3000/callback"       # For local testing
   ]
 
   logout_urls = [
@@ -105,15 +105,15 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
 }
 
 
-resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
-  identity_pool_name               = "${var.project_name}-identity-pool"
-  allow_unauthenticated_identities = false
+# resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
+#   identity_pool_name               = "${var.project_name}-identity-pool"
+#   allow_unauthenticated_identities = false
 
-  cognito_identity_providers {
-    client_id     = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
-    provider_name = aws_cognito_user_pool.swift_lift_club_user_pool.endpoint
-  }
-}
+#   cognito_identity_providers {
+#     client_id     = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
+#     provider_name = aws_cognito_user_pool.swift_lift_club_user_pool.endpoint
+#   }
+# }
 
 resource "aws_cognito_user_pool_domain" "main" {
   domain          = "auth-swift-lift-club.moloko-mokubedi.co.za"
@@ -129,5 +129,38 @@ resource "aws_route53_record" "auth-cognito-A-record" {
     name                   = aws_cognito_user_pool_domain.main.cloudfront_distribution_arn
     zone_id                = "Z2FDTNDATAQYW2" # CloudFront Zone ID
     evaluate_target_health = false
+  }
+}
+
+
+resource "aws_ssm_parameter" "authority" {
+  name        = "/amplify/shared/${var.amplify_app_id}/AUTHORITY"
+  type        = "SecureString"
+  value       = "https://cognito-idp.${var.region}.amazonaws.com/${aws_cognito_user_pool.swift_lift_club_user_pool.id}"
+}
+
+resource "aws_ssm_parameter" "client_id" {
+  name        = "/amplify/shared/${var.amplify_app_id}/CLIENT_ID"
+  type        = "SecureString"
+  value       = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
+}
+
+resource "aws_ssm_parameter" "redirect_uris" {
+  name        = "/amplify/shared/${var.amplify_app_id}/REDIRECT_URI"
+  type        = "SecureString"
+  value       = "https://${var.domain_name}/callback"
+
+  tags = {
+    environment = "production"
+  }
+}
+
+resource "aws_ssm_parameter" "scope" {
+  name        = "/amplify/shared/${var.amplify_app_id}/SCOPE"
+  type        = "SecureString"
+  value       = "openid email profile"
+
+  tags = {
+    environment = "production"
   }
 }

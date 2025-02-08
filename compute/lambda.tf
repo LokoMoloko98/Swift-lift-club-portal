@@ -40,7 +40,7 @@ resource "aws_lambda_function" "trips_table_ops" {
 
 resource "aws_lambda_function" "get_user_profile" {
   s3_bucket = "mea-munera-lambda"
-  #swift-lift-trips-table-ops-1.0.0.zip is the initializing version, the version in production will be dictated by the CI/CD pipeline
+  #swift-lift-trips-user-profile-1.0.0.zip is the initializing version, the version in production will be dictated by the CI/CD pipeline
   s3_key        = "swift-lift-user-profile/swift-lift-user-profile-1.0.0.zip"
   function_name = "swift-lift-user-profile"
   role          = var.lambda-role-arn
