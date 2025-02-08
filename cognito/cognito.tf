@@ -104,17 +104,6 @@ resource "aws_cognito_user_pool_client" "swift_lift_club_user_pool_client" {
   ]
 }
 
-
-# resource "aws_cognito_identity_pool" "swift_lift_club_identity_pool" {
-#   identity_pool_name               = "${var.project_name}-identity-pool"
-#   allow_unauthenticated_identities = false
-
-#   cognito_identity_providers {
-#     client_id     = aws_cognito_user_pool_client.swift_lift_club_user_pool_client.id
-#     provider_name = aws_cognito_user_pool.swift_lift_club_user_pool.endpoint
-#   }
-# }
-
 resource "aws_cognito_user_pool_domain" "main" {
   domain          = "auth-swift-lift-club.moloko-mokubedi.co.za"
   certificate_arn = var.swift_lift_club_cert_arn

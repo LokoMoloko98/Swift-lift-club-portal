@@ -4,27 +4,6 @@ data "aws_ssm_parameter" "route_53_hostzone_id" {
   with_decryption = true
 }
 
-# Get parameters from Parameter Store
-# data "aws_ssm_parameter" "authority" {
-#   name = "/swift-lift/auth/authority"
-#   with_decryption = true
-# }
-
-# data "aws_ssm_parameter" "client_id" {
-#   name = "/swift-lift/auth/client_id"
-#   with_decryption = true
-# }
-
-# data "aws_ssm_parameter" "redirect_uri" {
-#   name = "/swift-lift/auth/redirect_uri"
-#   with_decryption = true
-# }
-
-# data "aws_ssm_parameter" "scope" {
-#   name = "/swift-lift/auth/scope"
-#   with_decryption = true
-# }
-
 data "aws_ssm_parameter" "github_access_token" {
   name = "Github_PAT"
   with_decryption = true
