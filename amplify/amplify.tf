@@ -58,7 +58,7 @@ custom_rule {
     # CLIENT_ID     = data.aws_ssm_parameter.client_id.value
     # REDIRECT_URI  = data.aws_ssm_parameter.redirect_uri.value
     # SCOPE         = data.aws_ssm_parameter.scope.value
-    _BUILD_TIMEOUT = "300"
+    _BUILD_TIMEOUT = "5"
   }
 }
 

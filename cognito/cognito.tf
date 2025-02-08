@@ -121,7 +121,6 @@ resource "aws_route53_record" "auth-cognito-A-record" {
   }
 }
 
-
 resource "aws_ssm_parameter" "authority" {
   name        = "/amplify/shared/${var.amplify_app_id}/AUTHORITY"
   type        = "SecureString"
