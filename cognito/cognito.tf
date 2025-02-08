@@ -32,7 +32,7 @@ resource "aws_cognito_user_pool" "swift_lift_club_user_pool" {
 
   email_configuration {
     email_sending_account = "COGNITO_DEFAULT"
-    from_email_address    = "Moloko Mokubedi <communication@moloko-mokubedi.co.za`s"
+    from_email_address    = "Moloko Mokubedi <communication@moloko-mokubedi.co.za`"
   }
 
   auto_verified_attributes = ["email"]
