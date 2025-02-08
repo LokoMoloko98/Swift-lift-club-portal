@@ -55,9 +55,6 @@ custom_rule {
 
 # Environment variables
   environment_variables = {
-    # CLIENT_ID     = data.aws_ssm_parameter.client_id.value
-    # REDIRECT_URI  = data.aws_ssm_parameter.redirect_uri.value
-    # SCOPE         = data.aws_ssm_parameter.scope.value
     _BUILD_TIMEOUT = "5"
   }
 }
@@ -66,7 +63,7 @@ resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.swift_lift_app.id
   branch_name = "main"
 
-  framework = "React"
+  framework = "Next.js - SSR"
   stage     = "PRODUCTION"
 
   enable_auto_build = true
