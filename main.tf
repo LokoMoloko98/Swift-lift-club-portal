@@ -56,4 +56,5 @@ module "amplify" {
   domain_name              = var.domain_name
   swift_lift_club_cert_arn = module.networking.swift_lift_club_cert_arn
   repository_url           = var.repository_url
+  amplify-service-role-arn = module.iam.amplify-service-role-arn
 }

@@ -28,3 +28,7 @@ variable "swift_lift_club_cert_arn" {
 variable "repository_url" {
   type        = string 
 }
+
+variable "amplify-service-role-arn" {
+  type = string
+}

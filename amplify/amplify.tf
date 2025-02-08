@@ -18,9 +18,10 @@ resource "aws_amplify_app" "swift_lift_app" {
   # Enable auto branch creation
   enable_auto_branch_creation = true
   enable_branch_auto_build   = true
-  
+
+  iam_service_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/amplify-service-role-${data.aws_caller_identity.current.account_id}"
   platform = "WEB_COMPUTE"
-  # The default build_spec added by the Amplify Console for React.
+
   build_spec = <<-EOT
     version: 1
     frontend:
@@ -45,12 +46,6 @@ resource "aws_amplify_app" "swift_lift_app" {
 custom_rule {
     source = "/<*>"
     status = "404"
-    target = "/index.html"
-  }
-
-  custom_rule {
-    source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>"
-    status = "200"
     target = "/index.html"
   }
 
