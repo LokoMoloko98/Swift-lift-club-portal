@@ -19,7 +19,7 @@ resource "aws_amplify_app" "swift_lift_app" {
   enable_auto_branch_creation = true
   enable_branch_auto_build   = true
 
-  iam_service_role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/amplify-service-role-${data.aws_caller_identity.current.account_id}"
+  iam_service_role_arn = var.amplify-service-role-arn
   platform = "WEB_COMPUTE"
 
   build_spec = <<-EOT
